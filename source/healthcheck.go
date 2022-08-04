@@ -36,14 +36,14 @@ const (
 func main() {
 	argumentCount := len( os.Args[ 1: ] )
 
-	if argumentCount < 1 {
+	if ( argumentCount < 1 ) {
 		fmt.Printf( "Container Health Check, v%s, by %s (%s)\n", VERSION, AUTHOR_NAME, AUTHOR_WEBSITE )
 		fmt.Fprintf( os.Stderr, "Usage: %s <url> [socks5 proxy]", os.Args[ 0 ] )
 		os.Exit( 1 )
 	}
 
 	targetUrl, urlParseError := url.Parse( os.Args[ 1 ] )
-	if urlParseError != nil {
+	if ( urlParseError != nil ) {
 		fmt.Fprintf( os.Stderr, "Failed to parse URL %s: %s", os.Args[ 1 ], urlParseError.Error() )
 		os.Exit( 1 )
 	}
@@ -53,12 +53,12 @@ func main() {
 	} }
 
 	httpRequest, httpRequestError := http.NewRequest( http.MethodGet, targetUrl.String(), nil )
-	if httpRequestError != nil {
+	if ( httpRequestError != nil ) {
 		fmt.Fprintf( os.Stderr, "Failed to create HTTP request: %s", httpRequestError.Error() )
 		os.Exit( 1 )
 	}
 
-	if strings.HasSuffix( targetUrl.Host, ".onion" ) {
+	if ( strings.HasSuffix( targetUrl.Host, ".onion" ) ) {
 		proxyAddress := PROXY_ADDRESS
 
 		if argumentCount == 2 {
@@ -75,21 +75,21 @@ func main() {
 	}
 
 	httpResponse, httpExecuteError := httpClient.Do( httpRequest )
-	if httpExecuteError != nil {
+	if ( httpExecuteError != nil ) {
 		fmt.Fprintf( os.Stderr, "Failed to execute HTTP request: %s", httpExecuteError.Error() )
 		os.Exit( 1 )
 	}
 
 	httpResponseBody, readBodyError := io.ReadAll( httpResponse.Body )
 	defer httpResponse.Body.Close()
-	if readBodyError != nil {
+	if ( readBodyError != nil ) {
 		fmt.Fprintf( os.Stderr, "Failed to read response body: %s", readBodyError.Error() )
 		os.Exit( 1 )
 	}
 
 	fmt.Printf( "%s: %s, %d bytes", targetUrl.Host, httpResponse.Status, len( httpResponseBody ) )
 
-	if httpResponse.StatusCode < 200 || httpResponse.StatusCode > 299 {
+	if ( httpResponse.StatusCode < 200 || httpResponse.StatusCode > 299 ) {
 		os.Exit( 1 )
 	}
 
