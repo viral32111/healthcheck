@@ -30,7 +30,7 @@ jobs:
 
     - name: Setup Build Environment
       run: |
-        sudo apt-get install --no-install-recommends --yes build-essential musl-dev
+        sudo apt-get install --no-install-recommends --yes musl-tools
         mkdir --verbose ./builds/
 
     - name: Build for Linux (x64) (glibc)
@@ -49,7 +49,7 @@ jobs:
         GOOS: linux
         GOARCH: amd64
         LIBRARY: musl
-        CC: /usr/bin/x86_64-linux-musl-gcc
+        CC: /usr/bin/musl-gcc
       run: |
         go build -v -ldflags='-s -w -linkmode external -extldflags "-static"' -o ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY ./source/
         strip ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
