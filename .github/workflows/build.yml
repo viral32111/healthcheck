@@ -28,20 +28,35 @@ jobs:
       with:
         go-version: 1.18
 
-    - name: Create Build Directory
-      run: mkdir --verbose ./builds/
+    - name: Setup Build Environment
+      run: |
+        sudo apt-get install --no-install-recommends --yes build-essential musl-dev
+        mkdir --verbose ./builds/
 
-    - name: Build Project for Linux (x64)
+    - name: Build for Linux (x64) (glibc)
       env:
         GOOS: linux
         GOARCH: amd64
+        LIBRARY: glibc
       run: |
-        go build -v -ldflags='-s -w' -o ./builds/$PROJECT-$GOOS-$GOARCH ./source/
-        strip ./builds/$PROJECT-$GOOS-$GOARCH
-        file ./builds/$PROJECT-$GOOS-$GOARCH
-        sha256sum ./builds/$PROJECT-$GOOS-$GOARCH
+        go build -v -ldflags='-s -w' -o ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY ./source/
+        strip ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
+        file ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
+        sha256sum ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
 
-    - name: Build Project for Windows (x64)
+    - name: Build for Linux (x64) (musl)
+      env:
+        GOOS: linux
+        GOARCH: amd64
+        LIBRARY: musl
+        CC: /usr/bin/x86_64-linux-musl-gcc
+      run: |
+        go build -v -ldflags='-s -w -linkmode external -extldflags "-static"' -o ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY ./source/
+        strip ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
+        file ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
+        sha256sum ./builds/$PROJECT-$GOOS-$GOARCH-$LIBRARY
+
+    - name: Build for Windows (x64)
       env:
         GOOS: windows
         GOARCH: amd64
