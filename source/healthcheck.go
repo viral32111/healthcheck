@@ -8,11 +8,6 @@ package main
  Needs to have infinite timeout because Docker will handle that for us.
 */
 
-/* Build:
- go build -o hc.exe healthcheck.go
- CC=/usr/bin/musl-gcc go build -o hc --ldflags '-w -linkmode external -extldflags "-static"' healthcheck.go && strip hc && chmod +x hc
-*/
-
 /* Usage:
  hc http://192.168.10.20:5000/metrics
  hc http://abcxyzhiddenservice.onion 127.0.0.1:9150
