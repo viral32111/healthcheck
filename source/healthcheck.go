@@ -8,20 +8,6 @@ Needs to only attempt connections once.
 Needs to have infinite timeout because Docker will handle that for us.
 */
 
-/* Usage:
-$ healthcheck http://localhost:5000/metrics
-SUCCESS, 200 OK
-
-$ healthcheck -expect 204 http://localhost:5000/betrics
-FAILURE, 404 Not Found
-
-$ healthcheck --expect 100 --proxy 127.0.0.1:9050 http://hiddenservice.onion
-SUCCESS, 100 Continue
-
-$ healthcheck --method POST http://example.com/health
-SUCCESS, 200 OK
-*/
-
 import (
 	"flag"
 	"fmt"

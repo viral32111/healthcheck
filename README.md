@@ -1,6 +1,52 @@
 # Healthcheck
 
-This is a utility for Docker containers to check their health by executing queries to HTTP endpoints and checking if the status code is successful.
+This is a utility for Docker containers to check their health by executing queries to HTTP endpoints and checking the response status code.
+
+## Usage
+
+Download the [latest release](https://github.com/viral32111/healthcheck/releases/latest) for your platform, both Linux (glibc & musl) and Windows builds are available.
+
+The executable is used by providing a target HTTP URL as the only argument (multiple arguments will be joined together to form the URL). It will exit with a status code of `0` if the check was successful (i.e. the HTTP response matched what was expected), or `1` if there was any error (invalid flags, destination unreachable, mismatching HTTP status code, etc.).
+
+There are optional flags that can be provided too for customising functionality:
+
+* `-expect <number>`: The HTTP status code in the response to consider successful, defaults to `200`.
+* `-method <string>`: The HTTP method to use in the request, defaults to `GET`.
+* `-proxy <ip:port>`: The address and port number of a proxy server to use (useful for checking .onion sites), defaults to none.
+
+These flags can be prefixed with either a single hyphen (`-`), or double hyphen (`--`), whichever you prefer.
+
+Use the `-help` flag (`-h`, `--help` too) on the executable for more information.
+
+### Examples
+
+Checking if the `/metrics` endpoint at `localhost` on port `5000` will respond with a `200` status code when sending a `GET` request:
+
+```
+$ healthcheck http://localhost:5000/metrics
+SUCCESS, 200 OK
+```
+
+Checking if the `/betrics` endpoint at `localhost` on port `5000` will respond with a `204` status code when sending a `GET` request:
+
+```
+$ healthcheck -expect 204 http://localhost:5000/betrics
+FAILURE, 404 Not Found
+```
+
+Checking if the onion site at `hiddenservice.onion` on port `80` will respond with a `100` status code when sending a `GET` request, through the local Tor SOCKS5 proxy:
+
+```
+$ healthcheck --expect 100 --proxy 127.0.0.1:9050 http://hiddenservice.onion
+SUCCESS, 100 Continue
+```
+
+Checking if the `/health` endpoint at `example.com` on port `443` will respond with a `200` status code when sending a `POST` request:
+
+```
+$ healthcheck --method POST https://example.com/health
+SUCCESS, 200 OK
+```
 
 ## License
 
