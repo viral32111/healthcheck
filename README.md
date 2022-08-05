@@ -18,6 +18,12 @@ These flags can be prefixed with either a single hyphen (`-`), or double hyphen 
 
 Use the `-help` flag (`-h`, `--help` too) on the executable for more information.
 
+### Docker
+
+Use either with the [Dockerfile `HEALTHCHECK` instruction](https://docs.docker.com/engine/reference/builder/#healthcheck) or the [docker run `--health-*`](https://docs.docker.com/engine/reference/run/#healthcheck) flags.
+
+For example, `HEALTHCHECK... CMD healthcheck http://127.0.0.1`, or `docker run..... --health-cmd healthcheck http://127.0.0.1/ .....image:tag`.
+
 ### Examples
 
 Checking if the `/metrics` endpoint at `localhost` on port `5000` will respond with a `200` status code when sending a `GET` request:
