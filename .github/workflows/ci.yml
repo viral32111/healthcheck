@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         operatingSystem: [ 'linux' ]
-        architecture: [ 'amd64', 'arm64' ]
+        architecture: [ 'amd64', '386', 'arm64', 'arm' ]
         library: [ 'glibc', 'musl' ]
     permissions:
       contents: read
@@ -83,12 +83,17 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
 
+      - name: Move executables into current directory
+        run: |
+          mv -v ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* ./
+          rm -v -r ${{ env.PROJECT_NAME }}-*/
+
       - name: Calculate checksums
         run: |
-          md5sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > MD5SUMS.txt
-          sha1sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA1SUMS.txt
-          sha256sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA256SUMS.txt
-          sha512sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA512SUMS.txt
+          md5sum ${{ env.PROJECT_NAME }}-* > MD5SUMS.txt
+          sha1sum ${{ env.PROJECT_NAME }}-* > SHA1SUMS.txt
+          sha256sum ${{ env.PROJECT_NAME }}-* > SHA256SUMS.txt
+          sha512sum ${{ env.PROJECT_NAME }}-* > SHA512SUMS.txt
 
       - name: Create draft release
         uses: softprops/action-gh-release@v1
@@ -96,6 +101,6 @@ jobs:
           draft: true
           tag_name: ${{ github.ref_name }}
           files: |
-            ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-*
+            ${{ env.PROJECT_NAME }}-*
             *SUMS.txt
           token: ${{ secrets.GITHUB_TOKEN }}
