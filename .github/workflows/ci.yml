@@ -23,6 +23,7 @@ jobs:
       matrix:
         operatingSystem: [ 'linux', 'windows' ]
         architecture: [ 'amd64', '386', 'arm64', 'arm' ]
+        library: []
         include:
           - operatingSystem: linux
             architecture: amd64
