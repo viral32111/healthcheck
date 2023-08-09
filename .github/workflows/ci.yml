@@ -23,15 +23,14 @@ jobs:
       matrix:
         operatingSystem: [ 'windows', 'linux' ]
         architecture: [ 'amd64', '386', 'arm64', 'arm' ]
-        library: [ 'glibc', 'musl' ]
+        exclude:
+          - operatingSystem: windows
+            library: '*'
         include:
           - operatingSystem: linux
             library: glibc
           - operatingSystem: linux
             library: musl
-        exclude:
-          - operatingSystem: windows
-            library: '*'
     permissions:
       contents: read
     steps:
