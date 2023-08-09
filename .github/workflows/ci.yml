@@ -23,32 +23,14 @@ jobs:
       matrix:
         operatingSystem: [ 'linux', 'windows' ]
         architecture: [ 'amd64', '386', 'arm64', 'arm' ]
-        library: []
-        include:
-          - operatingSystem: linux
-            architecture: amd64
+        library: [ '', 'glibc', 'musl' ]
+        exclude:
+          - operatingSystem: windows
             library: glibc
-          - operatingSystem: linux
-            architecture: amd64
+          - operatingSystem: windows
             library: musl
           - operatingSystem: linux
-            architecture: 386
-            library: glibc
-          - operatingSystem: linux
-            architecture: 386
-            library: musl
-          - operatingSystem: linux
-            architecture: arm64
-            library: glibc
-          - operatingSystem: linux
-            architecture: arm64
-            library: musl
-          - operatingSystem: linux
-            architecture: arm
-            library: glibc
-          - operatingSystem: linux
-            architecture: arm
-            library: musl
+            library: ''
     permissions:
       contents: read
     steps:
