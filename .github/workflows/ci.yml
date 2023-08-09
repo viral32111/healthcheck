@@ -29,6 +29,9 @@ jobs:
             library: glibc
           - operatingSystem: linux
             library: musl
+        exclude:
+          - operatingSystem: windows
+            library: '*'
     permissions:
       contents: read
     steps:
