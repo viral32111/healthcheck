@@ -1,6 +1,6 @@
 # Healthcheck
 
-[![Automate](https://github.com/viral32111/healthcheck/actions/workflows/automate.yml/badge.svg?branch=main)](https://github.com/viral32111/healthcheck/actions/workflows/automate.yml)
+[![CI](https://github.com/viral32111/healthcheck/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/viral32111/healthcheck/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/viral32111/healthcheck/actions/workflows/codeql.yml/badge.svg)](https://github.com/viral32111/healthcheck/actions/workflows/codeql.yml)
 ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/viral32111/healthcheck?label=Latest)
 ![GitHub repository size](https://img.shields.io/github/repo-size/viral32111/healthcheck?label=Size)
