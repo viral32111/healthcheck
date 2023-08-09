@@ -23,6 +23,11 @@ jobs:
       matrix:
         operatingSystem: [ 'linux' ]
         architecture: [ 'amd64', 'arm64' ]
+        include:
+          - operatingSystem: linux
+            library: glibc
+          - operatingSystem: linux
+            library: musl
     permissions:
       contents: read
     steps:
@@ -64,9 +69,7 @@ jobs:
           GOOS: ${{ matrix.operatingSystem }}
           GOARCH: ${{ matrix.architecture }}
           CC: ${{ matrix.library == 'musl' && '/usr/bin/musl-gcc' || '' }}
-        run: |
-          go build -v -ldflags='-s -w' -o ${{ steps.names.outputs.executable }} ./source/
-          strip ${{ steps.names.outputs.executable }}
+        run: go build -v -ldflags='-s -w' -o ${{ steps.names.outputs.executable }} ./source/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
