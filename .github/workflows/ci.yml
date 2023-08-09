@@ -25,13 +25,28 @@ jobs:
         architecture: [ 'amd64', '386', 'arm64', 'arm' ]
         include:
           - operatingSystem: linux
+            architecture: amd64
             library: glibc
           - operatingSystem: linux
+            architecture: amd64
             library: musl
-        exclude:
-          - operatingSystem: windows
+          - operatingSystem: linux
+            architecture: 386
             library: glibc
-          - operatingSystem: windows
+          - operatingSystem: linux
+            architecture: 386
+            library: musl
+          - operatingSystem: linux
+            architecture: arm64
+            library: glibc
+          - operatingSystem: linux
+            architecture: arm64
+            library: musl
+          - operatingSystem: linux
+            architecture: arm
+            library: glibc
+          - operatingSystem: linux
+            architecture: arm
             library: musl
     permissions:
       contents: read
