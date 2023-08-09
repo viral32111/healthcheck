@@ -22,8 +22,8 @@ import (
 )
 
 const (
-	PROJECT_NAME = "Container Health Check"
-	PROJECT_VERSION = "2.0.0"
+	PROJECT_NAME = "Healthcheck"
+	PROJECT_VERSION = "2.0.1"
 
 	AUTHOR_NAME = "viral32111"
 	AUTHOR_WEBSITE = "https://viral32111.com"
@@ -44,7 +44,7 @@ func main() {
 	// Set a custom help message
 	flag.Usage = func() {
 		fmt.Printf( "%s, v%s, by %s (%s).\n", PROJECT_NAME, PROJECT_VERSION, AUTHOR_NAME, AUTHOR_WEBSITE )
-		fmt.Printf( "\nUsage: %s [-expect <status>] [-method <method>] [-proxy <IP:PORT>] <URL>\n", os.Args[ 0 ] )
+		fmt.Printf( "\nUsage: %s [-expect <status>] [-method <method>] [-proxy <ip:port>] <url>\n", os.Args[ 0 ] )
 
 		flag.PrintDefaults()
 
