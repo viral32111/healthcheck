@@ -82,11 +82,13 @@ jobs:
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
+        with:
+          path: artifacts
 
-      - name: Move executables into current directory
+      - name: Move executables
         run: |
-          mv -v ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* ./
-          rm -v -r ${{ env.PROJECT_NAME }}-*/
+          mv -v artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* ./
+          rm -v -r artifacts
 
       - name: Calculate checksums
         run: |
