@@ -71,7 +71,7 @@ jobs:
           GOARCH: ${{ matrix.architecture }}
           CC: ${{ matrix.library == 'musl' && '/usr/bin/musl-gcc' || '' }}
         run: |
-          go build -v -ldflags='-s -w' -o ${{ steps.names.outputs.executable }} source
+          go build -v -ldflags='-s -w' -o ${{ steps.names.outputs.executable }} ./source/
           strip ${{ steps.names.outputs.executable }}
 
       - name: Upload build artifact
