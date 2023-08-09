@@ -60,7 +60,7 @@ jobs:
               .filter( value => value != '' )
               .join( '-' );
 
-            const executableName = ARTIFACT_NAME + ( OPERATING_SYSTEM == 'windows' ? '.exe' : '' );
+            const executableName = artifactName + ( OPERATING_SYSTEM == 'windows' ? '.exe' : '' );
 
             core.setOutput( 'artifact', artifactName );
             core.setOutput( 'executable', executableName );
