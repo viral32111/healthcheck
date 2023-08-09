@@ -23,11 +23,7 @@ jobs:
       matrix:
         operatingSystem: [ 'linux' ]
         architecture: [ 'amd64', 'arm64' ]
-        include:
-          - operatingSystem: linux
-            library: glibc
-          - operatingSystem: linux
-            library: musl
+        library: [ 'glibc', 'musl' ]
     permissions:
       contents: read
     steps:
@@ -86,15 +82,13 @@ jobs:
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
-        with:
-          path: artifacts
 
       - name: Calculate checksums
         run: |
-          md5sum artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > checksums/MD5SUMS.txt
-          sha1sum artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > checksums/SHA1SUMS.txt
-          sha256sum artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > checksums/SHA256SUMS.txt
-          sha512sum artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > checksums/SHA512SUMS.txt
+          md5sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > MD5SUMS.txt
+          sha1sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA1SUMS.txt
+          sha256sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA256SUMS.txt
+          sha512sum ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-* > SHA512SUMS.txt
 
       - name: Create draft release
         uses: softprops/action-gh-release@v1
@@ -102,6 +96,6 @@ jobs:
           draft: true
           tag_name: ${{ github.ref_name }}
           files: |
-            artifacts/${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-*
-            checksums/*.txt
+            ${{ env.PROJECT_NAME }}-*/${{ env.PROJECT_NAME }}-*
+            *SUMS.txt
           token: ${{ secrets.GITHUB_TOKEN }}
