@@ -1,5 +1,5 @@
-module container-health-checker
+module healthcheck
 
-go 1.18
+go 1.20
 
-require golang.org/x/net v0.12.0
+require golang.org/x/net v0.14.0
