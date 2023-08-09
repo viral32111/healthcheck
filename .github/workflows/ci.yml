@@ -21,9 +21,14 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        operatingSystem: [ 'linux' ]
+        operatingSystem: [ 'linux', 'windows' ]
         architecture: [ 'amd64', '386', 'arm64', 'arm' ]
         library: [ 'glibc', 'musl' ]
+        exclude:
+          - operatingSystem: windows
+            library: glibc
+          - operatingSystem: windows
+            library: musl
     permissions:
       contents: read
     steps:
